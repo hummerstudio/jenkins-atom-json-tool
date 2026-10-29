@@ -1,0 +1,76 @@
+{
+  "atomCode": "json-tool",
+  "name": "JSON read / write",
+  "version": "1.0.0",
+  "description": "Reads a value out of a JSON file into variables, writes one, or merges another file into it.",
+  "execution": {
+    "packagePath": "json-tool.jar",
+    "language": "java",
+    "target": "$atom_java_path -cp json-tool.jar com.jenkinschina.atom.sdk.AtomRunner"
+  },
+  "input": {
+    "operation": {
+      "label": "操作",
+      "type": "selector",
+      "default": "read",
+      "options": [
+        "read",
+        "write",
+        "merge"
+      ]
+    },
+    "file": {
+      "label": "文件（workspace 相对）",
+      "type": "vuex-input",
+      "default": "package.json"
+    },
+    "path": {
+      "label": "字段路径（a.b.c；read 留空 = 全文）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "value": {
+      "label": "写入的值",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "asNumber": {
+      "label": "按数字写入",
+      "type": "checkbox",
+      "default": "false"
+    },
+    "from": {
+      "label": "merge 的来源文件",
+      "type": "vuex-input",
+      "default": ""
+    }
+  },
+  "output": {
+    "value": {
+      "type": "string",
+      "description": "读到的值"
+    },
+    "type": {
+      "type": "string",
+      "description": "值类型"
+    },
+    "count": {
+      "type": "string",
+      "description": "展开的键数"
+    },
+    "merged": {
+      "type": "string",
+      "description": "合并的键数"
+    },
+    "file": {
+      "type": "string",
+      "description": "写的文件"
+    }
+  },
+  "x-jenkins": {
+    "protocol": "jenkins-1",
+    "requires": {
+      "runner": ">=0.4.0"
+    }
+  }
+}
