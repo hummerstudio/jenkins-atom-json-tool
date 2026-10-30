@@ -1,7 +1,7 @@
 {
   "atomCode": "json-tool",
   "name": "JSON read / write",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reads a value out of a JSON file into variables, writes one, or merges another file into it.",
   "execution": {
     "packagePath": "json-tool.jar",

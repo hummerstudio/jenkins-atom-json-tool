@@ -52,8 +52,17 @@ public class JsonToolAtom implements AtomTask {
             // the whole document: flat keys become variables, nesting becomes a.b
             Map<String, String> flat = new LinkedHashMap<>();
             flatten("", root, flat);
+            // "build.image" is not a variable name; BUILD_IMAGE is. Emit both, the runner exports the legal one.
+            Map<String, String> aliases = new LinkedHashMap<>();
+            flat.forEach((key, value) -> {
+                String alias = key.replace('.', '_').replace('-', '_').toUpperCase(java.util.Locale.ROOT);
+                if (!alias.equals(key) && alias.matches("[A-Z_][A-Z0-9_]*")) {
+                    aliases.putIfAbsent(alias, value);
+                }
+            });
             AtomResult result = AtomResult.success().data("count", String.valueOf(flat.size()));
             flat.forEach(result::data);
+            aliases.forEach(result::data);
             return result;
         }
         Object value = MiniJson.at(root, pointer);

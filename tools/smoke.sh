@@ -62,4 +62,11 @@ printf '{"operation": "read", "file": "x.json", "path": "nope"}' >"$dir/input.js
 run "$dir" >/dev/null 2>&1 && fail "a missing pointer must fail"
 grep -q "no value at 'nope'" "$dir/output.json" || fail "message: $(cat "$dir/output.json")"
 
+# a key with a dot is not a variable name: the atom also emits the upper-snake alias
+dir="$(mktemp -d)"; printf '{"build": {"image": "node:22", "number": 7}}' >"$dir/pkg.json"
+printf '{"file": "pkg.json", "pointer": "", "mode": "read"}' >"$dir/input.json"
+run "$dir" >/dev/null 2>&1 || fail "read failed: $(cat "$dir/output.json")"
+[ "$(output "$dir" BUILD_IMAGE)" = "node:22" ] || fail "BUILD_IMAGE alias missing: $(cat "$dir/output.json")"
+[ "$(output "$dir" BUILD_NUMBER)" = "7" ] || fail "BUILD_NUMBER alias missing: $(cat "$dir/output.json")"
+
 echo "smoke ok: nested read, flatten, typed write, merge, missing pointer"
