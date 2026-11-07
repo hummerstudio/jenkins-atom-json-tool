@@ -5,9 +5,11 @@ JSON read / write — port of **pipeline-utility-steps（readJSON/writeJSON）**
 The read side is the point: a version or an image tag that lives in package.json should reach the next step
 as a variable. Flattened keys (`a.b`) work as environment names only when they are legal ones.
 
-## Build and smoke test
+## Build and test
 
 ```bash
-./build.sh
-./tools/smoke.sh
+mvn verify
 ```
+
+The integration test in `src/test/java/atom/JsonToolIT.java` covers nested read, flattening, typed write, merge and a
+missing pointer.
