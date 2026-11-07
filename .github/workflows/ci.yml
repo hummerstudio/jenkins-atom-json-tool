@@ -37,4 +37,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: json-tool-atom
-          path: atom/dist/json-tool/
+          path: atom/target/dist/json-tool/
