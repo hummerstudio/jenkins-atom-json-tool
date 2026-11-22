@@ -1,15 +1,13 @@
-# jenkins-atom-json-tool
+# Merged into `atom-basic-steps`
 
-JSON read / write — port of **pipeline-utility-steps（readJSON/writeJSON）** (约 90,000（utility-steps）) as an atom.
+通用、与任何外部产品无关的文件动作集中到一个原子（对应 Jenkins 的 Pipeline Basic Steps）。
 
-The read side is the point: a version or an image tag that lives in package.json should reach the next step
-as a variable. Flattened keys (`a.b`) work as environment names only when they are legal ones.
-
-## Build and test
-
-```bash
-mvn verify
+```groovy
+// 旧
+runAtom(atom: 'json-tool', version: '1.latest', inputs: [...])
+// 新
+runAtom(atom: 'atom-basic-steps', version: '1.2.0', inputs: [action: 'json', ...])
 ```
 
-The integration test in `src/test/java/atom/JsonToolIT.java` covers nested read, flattening, typed write, merge and a
-missing pointer.
+参数与错误码沿用原实现（path 改名为 jsonPath）。
+本仓库只读保留，便于历史构建追溯。
